@@ -15,7 +15,6 @@ Config = {
         {dictionary = "misslsdhs", name = "wave_truck"},
         {dictionary = "mp_player_int_upperrock", name = "mp_player_int_rock_enter"},
         {dictionary = "mp_player_int_uppergang_sign_b", name = "mp_player_int_gang_sign_b_enter"},
-        {dictionary = "mp_player_int_upperwank", name = "mp_player_int_wank_01_enter"},
         {dictionary = "mp_player_int_upperv_sign", name = "mp_player_int_v_sign_enter"},
         {dictionary = "mp_player_int_uppertit_squeeze", name = "mp_player_int_tit_squeeze_enter"},
         {dictionary = "mp_player_int_uppersmoke", name = "mp_player_int_smoke_enter"},
