@@ -45,8 +45,6 @@ local function displayText(ped, words)
     local los = HasEntityClearLosToEntity(playerPed, ped, 17)
 
     if dist <= c.dist and los then
-        local exists = peds[ped] ~= nil
-
         peds[ped] = {
             interval = GetGameTimer() + c.wordInterval,
             words = words,
@@ -54,36 +52,36 @@ local function displayText(ped, words)
         }
         local randomAnimation
         local display = true
+        
+        for i=1, #peds[ped].words do
+            peds[ped].text = peds[ped].text..peds[ped].words[i].." "
 
-        if not exists then
-            for i=1, #peds[ped].words do
-                peds[ped].text = peds[ped].text..peds[ped].words[i].." "
-
-                randomAnimation = launchAnimation(ped, c.animationSpeed) 
-                
-                while display do
-                    Wait(0)
-                    local pos = GetOffsetFromEntityInWorldCoords(ped, 0.0, 0.0, 1.2)
-                    draw3dText(pos, peds[ped].text)
-                    display = GetGameTimer() <= peds[ped].interval
-                end
-                StopAnimTask(ped, randomAnimation.dictionary, randomAnimation.name, 8.0)
-
-                peds[ped].interval = GetGameTimer() + c.wordInterval
-                display = true
-            end
-
-            display = true
-            peds[ped].time = GetGameTimer() + c.time
-
+            randomAnimation = launchAnimation(ped, c.animationSpeed) 
+            
             while display do
                 Wait(0)
                 local pos = GetOffsetFromEntityInWorldCoords(ped, 0.0, 0.0, 1.2)
                 draw3dText(pos, peds[ped].text)
+                display = GetGameTimer() <= peds[ped].interval
+            end
+            StopAnimTask(ped, randomAnimation.dictionary, randomAnimation.name, 8.0)
+
+            peds[ped].interval = GetGameTimer() + c.wordInterval
+            display = true
+        end
+
+        display = true
+        peds[ped].time = GetGameTimer() + c.time
+
+        while display and peds[ped].time ~= nil do
+            Wait(0)
+            local pos = GetOffsetFromEntityInWorldCoords(ped, 0.0, 0.0, 1.2)
+            if peds[ped].time ~= nil then
+                draw3dText(pos, peds[ped].text)
                 display = GetGameTimer() <= peds[ped].time
             end
-            peds[ped] = nil
         end
+        peds[ped] = nil
     end
 end
 
